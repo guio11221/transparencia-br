@@ -1,7 +1,29 @@
 {
   "name": "transparencia-br",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "SDK TypeScript para API do Portal da Transparência",
+  "keywords": [
+    "portal-da-transparencia",
+    "transparencia",
+    "dados-abertos",
+    "governo-federal",
+    "api",
+    "sdk",
+    "typescript",
+    "beneficios",
+    "servidores",
+    "contratos"
+  ],
+  "author": "guio11221 <sguii5147@gmail.com> (https://github.com/guio11221)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guio11221/transparencia-br.git"
+  },
+  "bugs": {
+    "url": "https://github.com/guio11221/transparencia-br/issues"
+  },
+  "homepage": "https://github.com/guio11221/transparencia-br#readme",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
