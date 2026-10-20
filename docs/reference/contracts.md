@@ -1,6 +1,8 @@
-# Contratos oficiais e escopo de validação
+# Contratos e limitações
 
-Documentação de referência: https://api.portaldatransparencia.gov.br/ (OpenAPI 3, `/v3/api-docs`).
+Escopo de validação da SDK e mapeamento dos parâmetros obrigatórios.
+
+**Referência oficial:** [api.portaldatransparencia.gov.br](https://api.portaldatransparencia.gov.br/) (OpenAPI 3, `/v3/api-docs`).
 
 ## Endpoints nominais confirmados
 
@@ -16,13 +18,13 @@ Documentação de referência: https://api.portaldatransparencia.gov.br/ (OpenAP
 | `beneficios.garantiaSafra()`      | `/safra-codigo-por-cpf-ou-nis`             | Código do beneficiário |
 | `beneficios.peti()`               | `/peti-por-cpf-ou-nis`                     | Código do beneficiário |
 
-Todos os endpoints acima possuem prefixo `/api-de-dados`. Os DTOs garantem formato do identificador de 11 dígitos, mês válido e página positiva. A SDK **não valida o dígito verificador de CPF** porque `nis` e `codigo` também são aceitos em determinadas rotas. O identificador aceito por programa também está disponível em `api.beneficios.catalogo()`.
+Todos com prefixo `/api-de-dados`. Os DTOs garantem identificador de 11 dígitos, mês válido e página positiva. A SDK **não valida o dígito verificador de CPF** porque `nis` e `codigo` também são aceitos em algumas rotas. O identificador aceito por programa está em `api.beneficios.catalogo()`.
 
-## Filtros dos recursos genéricos
+## Parâmetros obrigatórios dos recursos genéricos
 
-O OpenAPI expõe parâmetros distintos entre recursos e endpoints. A SDK valida, em runtime, os parâmetros obrigatórios de cada endpoint conforme o `/v3/api-docs` oficial e falha antes da requisição quando falta um deles. Filtros não obrigatórios são repassados como estão; chaves desconhecidas não são removidas.
+A SDK valida, em runtime, os obrigatórios de cada endpoint conforme o `/v3/api-docs`. Filtros não obrigatórios são repassados; chaves desconhecidas **não são removidas**.
 
-| Recurso                                                                                                                                                                                                                                                                                                                                                                             | Parâmetros obrigatórios (além de `pagina`, quando suportada)                |
+| Recurso                                                                                                                                                                                                                                                                                                                                                                             | Obrigatórios (além de `pagina`, quando suportada)                           |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | `servidores`, `servidoresPorOrgao`, `servidoresFuncoesECargos`, `permissionarios`, `convenios`, `conveniosTipoInstrumento`, `notasFiscais`, `licitacoesUgs`, `licitacoesModalidades`, `ceis`, `cnep`, `ceaf`, `cepim`, `acordosLeniencia`, `cartoes`, `peps`, `imoveis`, `emendas`, `renunciasValor`, `renunciasImunesIsentas`, `renunciasHabilitadas`, `despesasTipoTransferencia` | nenhum                                                                      |
 | `contratos`, `licitacoes`                                                                                                                                                                                                                                                                                                                                                           | `codigoOrgao`                                                               |
@@ -45,15 +47,21 @@ O OpenAPI expõe parâmetros distintos entre recursos e endpoints. A SDK valida,
 | `despesasItensDeEmpenho`, `despesasFavorecidosFinais`                                                                                                                                                                                                                                                                                                                               | `codigoDocumento`                                                           |
 | `despesasItensDeEmpenhoHistorico`                                                                                                                                                                                                                                                                                                                                                   | `codigoDocumento`, `sequencial`                                             |
 | `despesasEmpenhosImpactados`, `despesasDocumentosRelacionados`                                                                                                                                                                                                                                                                                                                      | `codigoDocumento`, `fase`                                                   |
-| `despesasPorOrgao`, `despesasPorFuncionalProgramatica`, `despesasMovimentacaoLiquida`, `despesasFuncionalListar`                                                                                                                                                                                                                                                                    | `ano`                                                                       |
-| `despesasPlanoOrcamentario`                                                                                                                                                                                                                                                                                                                                                         | `ano`                                                                       |
+| `despesasPorOrgao`, `despesasPorFuncionalProgramatica`, `despesasMovimentacaoLiquida`, `despesasFuncionalListar`, `despesasPlanoOrcamentario`                                                                                                                                                                                                                                       | `ano`                                                                       |
 | `despesasDocumentos`                                                                                                                                                                                                                                                                                                                                                                | `dataEmissao`, `fase`                                                       |
 | `despesasDocumentosPorFavorecido`                                                                                                                                                                                                                                                                                                                                                   | `codigoPessoa`, `fase`, `ano`                                               |
 | `despesasFuncionalFuncoes`, `despesasFuncionalSubfuncoes`, `despesasFuncionalProgramas`, `despesasFuncionalAcoes`                                                                                                                                                                                                                                                                   | `anoInicio`                                                                 |
 | `despesasRecursosRecebidos`                                                                                                                                                                                                                                                                                                                                                         | `mesAnoInicio`, `mesAnoFim`                                                 |
 
-O identificador de `porId` é enviado como query string `/id?id=N` nos recursos `contratos` e `convenios`, conforme o contrato oficial; nos demais, o identificador compõe o caminho.
+### Identificadores de `porId`
 
-Para homologação integral, gere contratos por operação a partir do `/v3/api-docs`, acrescente testes HTTP com token autorizado e confirme as estruturas de saída antes de declarar estabilidade 1.0.
+`contratos` e `convenios` enviam o id como query string `/id?id=N` (contrato oficial); nos demais recursos, o id compõe o caminho.
 
-Os DTOs de resposta seguem abertos (`Record<string, unknown>`) porque o payload da API não é validado em runtime nesta versão.
+## Limitações
+
+- **Respostas não validadas em runtime.** Recursos genéricos retornam `RegistroDto` (`Record<string, unknown>` extensível).
+- **Sem descoberta implícita.** A SDK não cruza dados além do que métodos agregados explicitam.
+- **Validação de filtros é superficial.** Formatos de identificador são checados; regras de negócio, não.
+- **Pré-1.0.** Para homologação integral, gere contratos por operação a partir do `/v3/api-docs` e adicione testes HTTP com token autorizado antes de declarar estabilidade 1.0.
+
+Veja também: [Endpoints](endpoints.md) · [Recursos](recursos.md)
