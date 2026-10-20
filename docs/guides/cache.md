@@ -21,7 +21,7 @@ const api = new Transparencia({
 Para limpar em uso avançado, retenha o `FetchHttpClient` e chame `clearCache()`:
 
 ```ts
-import { FetchHttpClient, Transparencia } from 'transparencia-br';
+import { FetchHttpClient, Transparencia } from 'sdk-transparencia-br';
 
 const http = new FetchHttpClient({ apiKey: process.env.PORTAL_API_KEY! });
 const api = new Transparencia({ apiKey: process.env.PORTAL_API_KEY!, httpClient: http });

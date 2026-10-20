@@ -121,7 +121,7 @@ export class PortalTransparenciaClient {
  *
  * @example
  * ```ts
- * import { Transparencia } from 'transparencia-br';
+ * import { Transparencia } from 'sdk-transparencia-br';
  * const api = new Transparencia({ apiKey: process.env.CHAVE_API! });
  * ```
  */

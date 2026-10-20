@@ -1,5 +1,5 @@
 /**
- * Ponto único da API pública do pacote `transparencia-br`.
+ * Ponto único da API pública do pacote `sdk-transparencia-br`.
  *
  * Reexporta o cliente principal, os serviços por domínio, o núcleo
  * (HTTP, cache, paginação, erros) e os tipos de contrato dos consumidores.

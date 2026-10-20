@@ -8,17 +8,17 @@
 ## Instalação
 
 ```bash
-npm install transparencia-br
+npm install sdk-transparencia-br
 ```
 
 O pacote publica **ESM** e **CommonJS** com definições de tipo:
 
 ```ts
 // ESM / TypeScript
-import { Transparencia } from 'transparencia-br';
+import { Transparencia } from 'sdk-transparencia-br';
 
 // CommonJS
-const { Transparencia } = require('transparencia-br');
+const { Transparencia } = require('sdk-transparencia-br');
 ```
 
 ## Obtendo a chave
@@ -33,7 +33,7 @@ PORTAL_API_KEY=sua-chave-aqui
 
 ```ts
 import 'dotenv/config';
-import { Transparencia } from 'transparencia-br';
+import { Transparencia } from 'sdk-transparencia-br';
 
 const api = new Transparencia({ apiKey: process.env.PORTAL_API_KEY! });
 ```
@@ -44,7 +44,7 @@ const api = new Transparencia({ apiKey: process.env.PORTAL_API_KEY! });
 
 ```ts
 import 'dotenv/config';
-import { Transparencia } from 'transparencia-br';
+import { Transparencia } from 'sdk-transparencia-br';
 
 const api = new Transparencia({ apiKey: process.env.PORTAL_API_KEY! });
 

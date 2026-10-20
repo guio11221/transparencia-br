@@ -4,7 +4,7 @@ Consolida, em uma chamada, cadastro, auxílios, cartões, viagens, contratos e s
 
 ```ts
 import 'dotenv/config';
-import { Transparencia } from 'transparencia-br';
+import { Transparencia } from 'sdk-transparencia-br';
 
 const api = new Transparencia({ apiKey: process.env.PORTAL_API_KEY! });
 

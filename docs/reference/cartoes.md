@@ -5,7 +5,7 @@ Cartões de pagamento governamentais — onde despesas de custeio, diárias e va
 ## Tipos de cartão
 
 ```ts
-import { TIPOS_CARTAO, ROTULOS_TIPOS_CARTAO } from 'transparencia-br';
+import { TIPOS_CARTAO, ROTULOS_TIPOS_CARTAO } from 'sdk-transparencia-br';
 
 TIPOS_CARTAO; // { cpgf: 1, cpcc: 2, cpdc: 3 }
 ROTULOS_TIPOS_CARTAO[TIPOS_CARTAO.cpcc];

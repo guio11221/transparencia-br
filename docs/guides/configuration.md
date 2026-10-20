@@ -3,7 +3,7 @@
 Todas as opções são passadas ao construtor e valem **por instância**.
 
 ```ts
-import { Transparencia } from 'transparencia-br';
+import { Transparencia } from 'sdk-transparencia-br';
 
 const api = new Transparencia({
   apiKey: process.env.PORTAL_API_KEY!,
@@ -50,7 +50,7 @@ Reutilize **uma instância por processo** (rate limit e cache são por instânci
 
 ```ts
 // src/portal.ts
-import { Transparencia } from 'transparencia-br';
+import { Transparencia } from 'sdk-transparencia-br';
 
 export const api = new Transparencia({
   apiKey: process.env.PORTAL_API_KEY!,
@@ -65,7 +65,7 @@ export const api = new Transparencia({
 Injete um `httpClient` falso — nenhuma chamada real é feita:
 
 ```ts
-import { Transparencia, type HttpClientContract } from 'transparencia-br';
+import { Transparencia, type HttpClientContract } from 'sdk-transparencia-br';
 
 const fake: HttpClientContract = {
   get: async (path, query) => [{ path, query }],

@@ -4,7 +4,7 @@ Transações de CPGF/CPCC/CPDC de um portador.
 
 ```ts
 import 'dotenv/config';
-import { Transparencia, TIPOS_CARTAO, ROTULOS_TIPOS_CARTAO } from 'transparencia-br';
+import { Transparencia, TIPOS_CARTAO, ROTULOS_TIPOS_CARTAO } from 'sdk-transparencia-br';
 
 const api = new Transparencia({ apiKey: process.env.PORTAL_API_KEY! });
 

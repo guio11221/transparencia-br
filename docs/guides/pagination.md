@@ -43,7 +43,7 @@ const bpc = await api.beneficios.todos('bpc', { nis: '12345678901' }, { maxPagin
 ## Utilitários de baixo nível
 
 ```ts
-import { paginate, collectPages } from 'transparencia-br';
+import { paginate, collectPages } from 'sdk-transparencia-br';
 
 for await (const pagina of paginate(
   (p, signal) => api.consultas.consultar('peps', { pagina: p }, signal),

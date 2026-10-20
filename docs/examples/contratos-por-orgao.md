@@ -4,7 +4,7 @@ Varredura paginada dos contratos de um órgão federal.
 
 ```ts
 import 'dotenv/config';
-import { Transparencia } from 'transparencia-br';
+import { Transparencia } from 'sdk-transparencia-br';
 
 const api = new Transparencia({ apiKey: process.env.PORTAL_API_KEY! });
 

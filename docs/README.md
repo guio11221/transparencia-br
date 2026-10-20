@@ -1,4 +1,4 @@
-# Documentação — transparencia-br
+# Documentação — sdk-transparencia-br
 
 > SDK TypeScript para a API de Dados Abertos do Portal da Transparência do Governo Federal.
 

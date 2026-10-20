@@ -4,7 +4,7 @@ Verifica se um CNPJ consta em cadastros de sanção (CEIS, CNEP) e afins.
 
 ```ts
 import 'dotenv/config';
-import { Transparencia, PortalApiError } from 'transparencia-br';
+import { Transparencia, PortalApiError } from 'sdk-transparencia-br';
 
 const api = new Transparencia({ apiKey: process.env.PORTAL_API_KEY! });
 

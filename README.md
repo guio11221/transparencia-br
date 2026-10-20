@@ -1,6 +1,6 @@
 <div align="center">
 
-# transparencia-br
+# sdk-transparencia-br
 
 **SDK TypeScript para a API de Dados Abertos do Portal da Transparência do Governo Federal.**
 
@@ -8,7 +8,7 @@ Benefícios sociais, servidores, contratos, licitações, convênios, despesas, 
 visão consolidada por CPF/NIS — com validação de parâmetros, paginação, rate limiting,
 retries e cache.
 
-[![npm version](https://img.shields.io/npm/v/transparencia-br?color=cb3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/transparencia-br)
+[![npm version](https://img.shields.io/npm/v/sdk-transparencia-br?color=cb3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/sdk-transparencia-br)
 [![Node](https://img.shields.io/badge/node-%3E%3D22-339933?logo=node.js&logoColor=white)](https://nodejs.org)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](#licença)
@@ -34,7 +34,7 @@ retries e cache.
 ## :package: Instalação
 
 ```bash
-npm install transparencia-br
+npm install sdk-transparencia-br
 ```
 
 Requer **Node.js >= 22** (usa `fetch` nativo). Publica **ESM** e **CommonJS** com tipos.
@@ -43,7 +43,7 @@ Requer **Node.js >= 22** (usa `fetch` nativo). Publica **ESM** e **CommonJS** co
 
 ```ts
 import 'dotenv/config';
-import { Transparencia } from 'transparencia-br';
+import { Transparencia } from 'sdk-transparencia-br';
 
 const api = new Transparencia({
   apiKey: process.env.PORTAL_API_KEY!,
@@ -91,7 +91,7 @@ for await (const pagina of api.contratos.paginas({ codigoOrgao: '10001' }, { max
 ### Tratamento de erros
 
 ```ts
-import { PortalApiError } from 'transparencia-br';
+import { PortalApiError } from 'sdk-transparencia-br';
 
 try {
   await api.contratos.listar({}); // falta codigoOrgao → Error síncrono

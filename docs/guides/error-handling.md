@@ -23,7 +23,7 @@ try {
 Respostas HTTP de erro viram `PortalApiError`, com `status` e `details`:
 
 ```ts
-import { PortalApiError } from 'transparencia-br';
+import { PortalApiError } from 'sdk-transparencia-br';
 
 try {
   await api.pessoas.fisica({ cpf: '00000000000' });
