@@ -327,6 +327,45 @@ export class BeneficiosService {
     });
   }
   /**
+   * Consulta os beneficiários de um programa em um município específico.
+   *
+   * Diferente de {@link porMunicipio}, que agrega valores por município, este método usa a
+   * rota `*-beneficiario-por-municipio` e devolve os beneficiários individuais. Valida o
+   * `codigoIbge` (7 dígitos) de forma síncrona, antes da requisição.
+   *
+   * @param programa Nome-base do endpoint em kebab-case (ex.: `'bolsa-familia'`).
+   * @param codigoIbge Código IBGE do município, com exatamente 7 dígitos.
+   * @param mesAno Mês de referência em `AAAAMM` (ex.: `202401`).
+   * @param pagina Página a consultar (padrão `1`).
+   * @returns Os beneficiários do programa no município e mês informados.
+   * @throws `Error` síncrono (ZodError) se o código IBGE não tiver 7 dígitos.
+   * @example
+   * const beneficiarios = await api.beneficios.beneficiariosPorMunicipio('bolsa-familia', '3550308', 202401);
+   */
+  beneficiariosPorMunicipio(
+    programa:
+      | 'bolsa-familia-disponivel'
+      | 'bolsa-familia-sacado'
+      | 'novo-bolsa-familia-sacado'
+      | 'auxilio-brasil-sacado'
+      | 'auxilio-emergencial'
+      | 'bpc'
+      | 'seguro-defeso'
+      | 'safra'
+      | 'peti',
+    codigoIbge: string,
+    mesAno: number,
+    pagina = 1,
+  ) {
+    z.string()
+      .regex(/^\d{7}$/)
+      .parse(codigoIbge);
+    return this.http.get<BeneficioRegistroDto[]>(
+      `/api-de-dados/${programa}-beneficiario-por-municipio`,
+      { codigoIbge, mesAno, pagina },
+    );
+  }
+  /**
    * Agrega todos os programas para um único identificador.
    *
    * Normaliza `codigo` de forma síncrona (11 dígitos, máscara removida) e delega a

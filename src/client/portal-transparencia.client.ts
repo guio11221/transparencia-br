@@ -14,6 +14,7 @@ import { ConveniosService } from '../modules/consultas/services/convenios.servic
 import { ViagensService } from '../modules/consultas/services/viagens.service.js';
 import { NotasFiscaisService } from '../modules/consultas/services/notas-fiscais.service.js';
 import { CartoesService } from '../modules/consultas/services/cartoes.service.js';
+import { EndpointsService } from '../modules/consultas/services/endpoints.service.js';
 import { PessoasService } from '../modules/pessoas/services/pessoas.service.js';
 import { DespesasService } from '../modules/despesas/services/despesas.service.js';
 import { RenunciasService } from '../modules/renuncias/services/renuncias.service.js';
@@ -39,6 +40,8 @@ export class PortalTransparenciaClient {
   readonly orgaos: OrgaosService;
   /** Serviço base de consultas aos endpoints genéricos do Portal. */
   readonly consultas: ConsultasService;
+  /** Descoberta e execução de qualquer endpoint oficial (busca no catálogo). */
+  readonly endpoints: EndpointsService;
   /** Servidores públicos federais. */
   readonly servidores: ServidoresService;
   /** Remunerações de servidores públicos. */
@@ -88,6 +91,7 @@ export class PortalTransparenciaClient {
     this.beneficios = new BeneficiosService(http);
     this.orgaos = new OrgaosService(http);
     this.consultas = new ConsultasService(http);
+    this.endpoints = new EndpointsService(this.consultas);
     this.servidores = new ServidoresService(this.consultas, 'servidores');
     this.remuneracoes = new RecursoService(this.consultas, 'remuneracoes');
     this.permissionarios = new RecursoService(this.consultas, 'permissionarios');

@@ -32,12 +32,20 @@ export {
   TIPOS_CARTAO,
   ROTULOS_TIPOS_CARTAO,
 } from './modules/consultas/services/cartoes.service.js';
+export { EndpointsService } from './modules/consultas/services/endpoints.service.js';
 export { PessoasService } from './modules/pessoas/services/pessoas.service.js';
 export { DespesasService } from './modules/despesas/services/despesas.service.js';
 export { RenunciasService } from './modules/renuncias/services/renuncias.service.js';
 export { EmendasService } from './modules/emendas/services/emendas.service.js';
 export { endpoints } from './modules/consultas/endpoints.js';
 export { catalogoProgramas } from './modules/beneficios/catalogo.js';
+export {
+  catalogoEndpoints,
+  buscarEndpoints,
+  type EndpointInfo,
+  type EndpointParametro,
+  type DominioEndpoint,
+} from './modules/consultas/catalogo-endpoints.js';
 
 // Tipos públicos: opções do SDK, contratos e DTOs de cada domínio
 export type { SdkOptions } from './core/types/sdk-options.type.js';
@@ -51,6 +59,7 @@ export type {
 } from './modules/beneficios/dtos/beneficio-query.dto.js';
 export type { ProgramaCatalogo, IdentificadorPrograma } from './modules/beneficios/catalogo.js';
 export type { RecursoConsulta } from './modules/consultas/services/consultas.service.js';
+export type { RecursoPorId } from './modules/consultas/services/consultas.service.js';
 export type { TipoCartao } from './modules/consultas/services/cartoes.service.js';
 export type { ResumoPessoa, SecaoResumo } from './modules/pessoas/services/pessoas.service.js';
 export type { EndpointConsulta } from './modules/consultas/endpoints.js';

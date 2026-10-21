@@ -121,6 +121,11 @@ try {
 | `despesas`                                                                   | desembolsos, documentos, empenhos, `funcionalProgramatica.*`                                |
 | `renuncias`, `emendas`, `peps`, `imoveis`, `permissionarios`, `remuneracoes` | consultas específicas                                                                       |
 | `sancoes`                                                                    | `ceis`, `cnep`, `ceaf`, `cepim`                                                             |
+| `endpoints`                                                                  | `buscar()`, `listar()`, `descrever()` — catálogo pesquisável de todos os 109 endpoints      |
+
+A SDK cobre **todos os 109 endpoints oficiais**. Não sabe o método? Procure no catálogo:
+`api.endpoints.buscar('cartao')` ou `api.endpoints.listar('sancoes')` (tolerante a acentos). Mais
+em [Descobrir endpoints](docs/reference/descoberta.md).
 
 Tabela completa em [Endpoints](docs/reference/endpoints.md).
 
@@ -138,7 +143,7 @@ Tabela completa em [Endpoints](docs/reference/endpoints.md).
 | Seção                             | Conteúdo                                                                 |
 | --------------------------------- | ------------------------------------------------------------------------ |
 | [Guias](docs/guides/)             | Instalação, configuração, erros, paginação, rate limit, cache, segurança |
-| [Referência](docs/reference/)     | Benefícios, pessoas, cartões, recursos, endpoints, contratos             |
+| [Referência](docs/reference/)     | Benefícios, pessoas, cartões, recursos, endpoints, descobrir endpoints   |
 | [Exemplos](docs/examples/)        | Receitas copy-paste prontas                                              |
 | [Índice completo](docs/README.md) | Todas as páginas                                                         |
 

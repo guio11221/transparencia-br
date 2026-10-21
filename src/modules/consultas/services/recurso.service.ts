@@ -1,4 +1,4 @@
-import type { RecursoConsulta, ConsultasService } from './consultas.service.js';
+import type { RecursoConsulta, ConsultasService, RecursoPorId } from './consultas.service.js';
 import type { FiltrosConsultaDto, RegistroDto } from '../dtos/consulta.dto.js';
 import {
   collectPages,
@@ -82,19 +82,7 @@ export class RecursoService<R extends RecursoConsulta> {
  * `contratos`, `convenios`, `licitacoes`, `ceis`, `cnep`, `ceaf`, `cepim` e
  * `acordosLeniencia`.
  */
-export class RecursoComIdService<
-  R extends
-    | 'servidores'
-    | 'viagens'
-    | 'contratos'
-    | 'convenios'
-    | 'licitacoes'
-    | 'ceis'
-    | 'cnep'
-    | 'ceaf'
-    | 'cepim'
-    | 'acordosLeniencia',
-> extends RecursoService<R> {
+export class RecursoComIdService<R extends RecursoPorId> extends RecursoService<R> {
   /**
    * Consulta um registro do recurso pelo identificador.
    *

@@ -138,7 +138,7 @@ const orgaosSiape = await api.orgaos.siape();
 
 Use os códigos retornados como `codigoOrgao` em contratos/licitações/despesas.
 
-## Acesso direto (`consultas`)
+## Acesso direto (`consultas`) e descoberta (`endpoints`)
 
 Para caminhos ainda não expostos por um serviço:
 
@@ -146,7 +146,20 @@ Para caminhos ainda não expostos por um serviço:
 await api.consultas.consultar('cartoes', { cpfPortador: '12345678901' });
 await api.consultas.consultarUm('pessoaFisica', { cpf: '12345678901' });
 await api.consultas.porId('contratos', 123);
+await api.consultas.consultar('coronavirusTransferencias', { mesAno: 202004 });
 ```
+
+Para **achar** o endpoint certo sem decorar nomes, use o catálogo pesquisável:
+
+```ts
+const encontrados = api.endpoints.buscar('municipio'); // tolera acentos e caixa
+const deSancoes = api.endpoints.listar('sancoes');
+const info = api.endpoints.descrever('ceis'); // parâmetros e descrição
+await api.endpoints.consultar(info!.recurso, { nomeSancionado: 'ACME' });
+```
+
+A SDK cobre **todos os 109 endpoints** do OpenAPI oficial. Detalhes em
+[Descobrir endpoints](descoberta.md).
 
 - `porId` usa `GET /id?id=N` em `contratos`/`convenios`; `/{id}` nos demais.
 - `endpoints` (exportado) é a fonte única dos caminhos; `EndpointConsulta` lista os recursos válidos.

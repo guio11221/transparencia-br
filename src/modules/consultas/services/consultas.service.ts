@@ -9,12 +9,34 @@ import {
 export { endpoints };
 export type RecursoConsulta = EndpointConsulta;
 export type Registro = RegistroDto;
-
 /** Endpoints oficiais que expõem o identificador como query string `/id?id=N`. */
-const endpointPorIdComQuery: Partial<Record<EndpointConsulta, EndpointConsulta>> = {
+const endpointPorIdComQuery: Partial<Record<RecursoPorId, EndpointConsulta>> = {
   contratos: 'contratosPorId',
   convenios: 'conveniosPorId',
 };
+/** Endpoints oficiais cujo identificador é um segmento de caminho `/X/{id}`. */
+const endpointPorIdNoCaminho: Partial<Record<RecursoPorId, EndpointConsulta>> = {
+  servidores: 'servidoresPorId',
+  viagens: 'viagensPorId',
+  licitacoes: 'licitacoesPorId',
+  ceis: 'ceisPorId',
+  cnep: 'cnepPorId',
+  ceaf: 'ceafPorId',
+  cepim: 'cepimPorId',
+  acordosLeniencia: 'acordosLenienciaPorId',
+};
+/** Recursos que oferecem busca por identificador. */
+export type RecursoPorId =
+  | 'servidores'
+  | 'viagens'
+  | 'contratos'
+  | 'convenios'
+  | 'licitacoes'
+  | 'ceis'
+  | 'cnep'
+  | 'ceaf'
+  | 'cepim'
+  | 'acordosLeniencia';
 /** Placeholders `{chave}` presentes em alguns caminhos de `endpoints`. */
 const placeholderCaminho = /\{(\w+)\}/g;
 
@@ -84,25 +106,15 @@ export class ConsultasService {
    * @example
    * const contrato = await api.consultas.porId('contratos', 12);
    */
-  porId(
-    recurso:
-      | 'servidores'
-      | 'viagens'
-      | 'contratos'
-      | 'convenios'
-      | 'licitacoes'
-      | 'ceis'
-      | 'cnep'
-      | 'ceaf'
-      | 'cepim'
-      | 'acordosLeniencia',
-    id: string | number,
-    signal?: AbortSignal,
-  ) {
+  porId(recurso: RecursoPorId, id: string | number, signal?: AbortSignal) {
     if (!String(id).trim()) throw new Error('ID obrigatório');
     const endpointId = endpointPorIdComQuery[recurso];
     if (endpointId) {
       return this.consultarUm(endpointId, { id }, signal);
+    }
+    const endpointCaminho = endpointPorIdNoCaminho[recurso];
+    if (endpointCaminho) {
+      return this.consultarUm(endpointCaminho, { id }, signal);
     }
     return this.http.get<RegistroDto>(
       `${endpoints[recurso]}/${encodeURIComponent(String(id))}`,

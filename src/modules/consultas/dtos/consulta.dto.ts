@@ -56,6 +56,7 @@ export const filtrosPorRecursoSchema = {
     orgaoServidorLotacao: valor().optional(),
     pagina: paginaSchema,
   }),
+  servidoresPorId: schema({ id: obrigatorioInteiro() }),
   servidoresPorOrgao: schema({
     orgaoLotacao: valor().optional(),
     orgaoExercicio: valor().optional(),
@@ -88,6 +89,7 @@ export const filtrosPorRecursoSchema = {
     pagina: paginaSchema,
   }),
   viagensPorCpf: schema({ cpf: requerido(), pagina: paginaSchema }),
+  viagensPorId: schema({ id: obrigatorioInteiro() }),
   contratos: schema({
     dataInicial: valor().optional(),
     dataFinal: valor().optional(),
@@ -137,6 +139,7 @@ export const filtrosPorRecursoSchema = {
     codigoOrgao: requerido(),
     pagina: paginaSchema,
   }),
+  licitacoesPorId: schema({ id: obrigatorioInteiro() }),
   licitacoesUgs: schema({ pagina: paginaSchema }),
   licitacoesModalidades: schema({}),
   licitacoesPorProcesso: schema({ processo: requerido() }),
@@ -178,6 +181,7 @@ export const filtrosPorRecursoSchema = {
     dataFinalSancao: valor().optional(),
     pagina: paginaSchema,
   }),
+  ceisPorId: schema({ id: obrigatorioInteiro() }),
   cnep: schema({
     codigoSancionado: valor().optional(),
     nomeSancionado: valor().optional(),
@@ -186,6 +190,7 @@ export const filtrosPorRecursoSchema = {
     dataFinalSancao: valor().optional(),
     pagina: paginaSchema,
   }),
+  cnepPorId: schema({ id: obrigatorioInteiro() }),
   ceaf: schema({
     cpfSancionado: valor().optional(),
     nomeSancionado: valor().optional(),
@@ -194,6 +199,7 @@ export const filtrosPorRecursoSchema = {
     dataPublicacaoFim: valor().optional(),
     pagina: paginaSchema,
   }),
+  ceafPorId: schema({ id: obrigatorioInteiro() }),
   cepim: schema({
     cnpjSancionado: valor().optional(),
     nomeSancionado: valor().optional(),
@@ -201,6 +207,7 @@ export const filtrosPorRecursoSchema = {
     orgaoEntidade: valor().optional(),
     pagina: paginaSchema,
   }),
+  cepimPorId: schema({ id: obrigatorioInteiro() }),
   acordosLeniencia: schema({
     cnpjSancionado: valor().optional(),
     nomeSancionado: valor().optional(),
@@ -209,6 +216,7 @@ export const filtrosPorRecursoSchema = {
     dataFinalSancao: valor().optional(),
     pagina: paginaSchema,
   }),
+  acordosLenienciaPorId: schema({ id: obrigatorioInteiro() }),
   cartoes: schema({
     mesExtratoInicio: valor().optional(),
     mesExtratoFim: valor().optional(),
@@ -239,6 +247,23 @@ export const filtrosPorRecursoSchema = {
     regiao: valor().optional(),
     cep: valor().optional(),
     endereco: valor().optional(),
+    pagina: paginaSchema,
+  }),
+  situacaoImovel: schema({
+    codigoImovel: valor().optional(),
+    cpfOcupante: valor().optional(),
+    nomeOcupante: valor().optional(),
+    situacaoImovel: valor().optional(),
+    pagina: paginaSchema,
+  }),
+  orgaosSiafi: schema({
+    codigo: valor().optional(),
+    descricao: valor().optional(),
+    pagina: paginaSchema,
+  }),
+  orgaosSiape: schema({
+    codigo: valor().optional(),
+    descricao: valor().optional(),
     pagina: paginaSchema,
   }),
   pessoaFisica: schema({
@@ -376,6 +401,161 @@ export const filtrosPorRecursoSchema = {
   despesasFuncionalAcoes: schema({
     anoInicio: obrigatorioInteiro(),
     codigo: valor().optional(),
+    pagina: paginaSchema,
+  }),
+  coronavirusTransferencias: schema({
+    mesAno: requerido(),
+    codigoOrgao: valor().optional(),
+    tipoTransferencia: valor().optional(),
+    uf: valor().optional(),
+    codigoIbge: valor().optional(),
+    pagina: paginaSchema,
+  }),
+  coronavirusMovimentoLiquido: schema({
+    mesAnoLancamento: requerido(),
+    funcao: valor().optional(),
+    subfuncao: valor().optional(),
+    programa: valor().optional(),
+    acao: valor().optional(),
+    grupoDespesa: valor().optional(),
+    elementoDespesa: valor().optional(),
+    modalidadeAplicacao: valor().optional(),
+    idPlanoOrcamentario: inteiro().optional(),
+    pagina: paginaSchema,
+  }),
+  bolsaFamiliaPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  bolsaFamiliaDisponivelBeneficiarioPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  bolsaFamiliaDisponivelPorCpfOuNis: schema({
+    codigo: requerido(),
+    anoMesReferencia: valor().optional(),
+    anoMesCompetencia: valor().optional(),
+    pagina: paginaSchema,
+  }),
+  bolsaFamiliaSacadoBeneficiarioPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  bolsaFamiliaSacadoPorCpfOuNis: schema({
+    codigo: requerido(),
+    anoMesReferencia: valor().optional(),
+    anoMesCompetencia: valor().optional(),
+    pagina: paginaSchema,
+  }),
+  bolsaFamiliaSacadoPorNis: schema({
+    nis: requerido(),
+    anoMesReferencia: valor().optional(),
+    anoMesCompetencia: valor().optional(),
+    pagina: paginaSchema,
+  }),
+  bpcBeneficiarioPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  bpcPorCpfOuNis: schema({ codigo: requerido(), pagina: paginaSchema }),
+  bpcPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  novoBolsaFamiliaPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  novoBolsaFamiliaSacadoBeneficiarioPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  novoBolsaFamiliaSacadoPorCpfOuNis: schema({
+    codigo: requerido(),
+    anoMesReferencia: valor().optional(),
+    anoMesCompetencia: valor().optional(),
+    pagina: paginaSchema,
+  }),
+  novoBolsaFamiliaSacadoPorNis: schema({
+    nis: requerido(),
+    anoMesReferencia: valor().optional(),
+    anoMesCompetencia: valor().optional(),
+    pagina: paginaSchema,
+  }),
+  petiBeneficiarioPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  petiPorCpfOuNis: schema({ codigo: requerido(), pagina: paginaSchema }),
+  petiPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  safraBeneficiarioPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  safraPorCpfOuNis: schema({ codigo: requerido(), pagina: paginaSchema }),
+  safraPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  seguroDefesoBeneficiarioPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  seguroDefesoPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  auxilioBrasilPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  auxilioBrasilSacadoBeneficiarioPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  auxilioBrasilSacadoPorCpfOuNis: schema({
+    codigo: requerido(),
+    anoMesReferencia: valor().optional(),
+    anoMesCompetencia: valor().optional(),
+    pagina: paginaSchema,
+  }),
+  auxilioBrasilSacadoPorNis: schema({
+    nis: requerido(),
+    anoMesReferencia: valor().optional(),
+    anoMesCompetencia: valor().optional(),
+    pagina: paginaSchema,
+  }),
+  auxilioEmergencialBeneficiarioPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
+    pagina: paginaSchema,
+  }),
+  auxilioEmergencialPorCpfOuNis: schema({
+    codigoBeneficiario: valor().optional(),
+    codigoResponsavelFamiliar: valor().optional(),
+    pagina: paginaSchema,
+  }),
+  auxilioEmergencialPorMunicipio: schema({
+    mesAno: requerido(),
+    codigoIbge: requerido(),
     pagina: paginaSchema,
   }),
 } satisfies Record<EndpointConsulta, z.ZodTypeAny>;

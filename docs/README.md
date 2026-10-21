@@ -16,6 +16,7 @@ Bem-vindo à documentação completa. Escolha um caminho:
 - [Pessoas](reference/pessoas.md) — consultas pontuais e o resumo consolidado
 - [Cartões de pagamento](reference/cartoes.md) — CPGF, CPCC, CPDC
 - [Recursos governamentais](reference/recursos.md) — servidores, contratos, licitações, convênios, despesas, sanções
+- [Descobrir endpoints](reference/descoberta.md) — catálogo pesquisável de todos os 109 endpoints
 - [Endpoints](reference/endpoints.md) — mapa método → caminho oficial
 - [Contratos e limitações](reference/contracts.md) — parâmetros obrigatórios e escopo
 
