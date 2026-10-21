@@ -4,6 +4,7 @@ import {
   TIPOS_CARTAO,
   ROTULOS_TIPOS_CARTAO,
   PortalApiError,
+  secoesResumo,
 } from '../../src/index.js';
 
 const criarApi = (get = vi.fn().mockResolvedValue([])) => ({
@@ -190,6 +191,19 @@ describe('pessoas.resumo', () => {
     const { get, api } = criarApi();
     expect(() => api.pessoas.resumo({})).toThrow(/cpf ou nis/);
     expect(get).not.toHaveBeenCalled();
+  });
+
+  it('secoesResumo itera apenas as seções presentes com a chave correta', async () => {
+    const { api } = criarApi();
+    const resumo = await api.pessoas.resumo({ nis: '12345678901' });
+    const entradas = secoesResumo(resumo);
+    expect(entradas.map((e) => e.chave).sort()).toEqual(['beneficios', 'pessoa']);
+    for (const { chave, secao } of entradas) {
+      expect(chave).toBeTruthy();
+      expect(secao.status).toBe('sucesso');
+      if (secao.status === 'erro') throw new Error(`seção ${chave} falhou`);
+      expect(secao.dados).toBeDefined();
+    }
   });
 });
 

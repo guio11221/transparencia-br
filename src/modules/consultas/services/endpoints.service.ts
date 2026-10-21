@@ -81,25 +81,34 @@ export class EndpointsService {
   /**
    * Executa um endpoint do catálogo com os filtros informados.
    *
+   * Aceita tanto a chave do recurso (`'peps'`) quanto uma entrada do catálogo devolvida
+   * por `buscar`/`descrever` — nesse caso a chave é lida de `info.recurso`, então é
+   * possível encadear `api.endpoints.consultar(api.endpoints.buscar('cartao')[0], ...)`.
    * Delega ao {@link ConsultasService}, aplicando validação síncrona, página padrão e
-   * substituição de placeholders de caminho — o mesmo comportamento dos serviços por
-   * domínio, acessível por chave.
+   * substituição de placeholders de caminho.
    *
-   * @param recurso Chave do endpoint em `endpoints`.
+   * @param recurso Chave do endpoint em `endpoints` ou uma entrada do catálogo.
    * @param filtros Filtros em query string; `pagina` recebe `1` quando omitida.
    * @param signal AbortSignal opcional para cancelar a requisição.
    * @returns Os registros devolvidos pelo endpoint.
    * @throws `Error` síncrono se algum parâmetro obrigatório estiver ausente ou inválido.
    * @example
    * const peps = await api.endpoints.consultar('peps', { nome: 'Silva' });
+   * const [cartao] = api.endpoints.buscar('cartao');
+   * if (cartao) await api.endpoints.consultar(cartao, { cpfPortador: '12345678901' });
    */
   consultar(
-    recurso: EndpointInfo['recurso'],
+    recurso: EndpointInfo['recurso'] | EndpointInfo,
     filtros: FiltrosConsultaDto = {},
     signal?: AbortSignal,
   ): Promise<RegistroDto[]> {
-    return this.consultas.consultar(recurso, filtros, signal);
+    return this.consultas.consultar(chaveDe(recurso), filtros, signal);
   }
+}
+
+/** Extrai a chave do recurso, aceitando tanto a string quanto uma entrada do catálogo. */
+function chaveDe(recurso: EndpointInfo['recurso'] | EndpointInfo): EndpointInfo['recurso'] {
+  return typeof recurso === 'string' ? recurso : recurso.recurso;
 }
 
 /** Cópia defensiva de uma entrada do catálogo, incluindo os parâmetros aninhados. */

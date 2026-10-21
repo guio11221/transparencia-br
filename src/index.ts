@@ -33,7 +33,7 @@ export {
   ROTULOS_TIPOS_CARTAO,
 } from './modules/consultas/services/cartoes.service.js';
 export { EndpointsService } from './modules/consultas/services/endpoints.service.js';
-export { PessoasService } from './modules/pessoas/services/pessoas.service.js';
+export { PessoasService, secoesResumo } from './modules/pessoas/services/pessoas.service.js';
 export { DespesasService } from './modules/despesas/services/despesas.service.js';
 export { RenunciasService } from './modules/renuncias/services/renuncias.service.js';
 export { EmendasService } from './modules/emendas/services/emendas.service.js';
@@ -61,7 +61,12 @@ export type { ProgramaCatalogo, IdentificadorPrograma } from './modules/benefici
 export type { RecursoConsulta } from './modules/consultas/services/consultas.service.js';
 export type { RecursoPorId } from './modules/consultas/services/consultas.service.js';
 export type { TipoCartao } from './modules/consultas/services/cartoes.service.js';
-export type { ResumoPessoa, SecaoResumo } from './modules/pessoas/services/pessoas.service.js';
+export type {
+  ResumoPessoa,
+  SecaoResumo,
+  ChaveResumo,
+  EntradaResumo,
+} from './modules/pessoas/services/pessoas.service.js';
 export type { EndpointConsulta } from './modules/consultas/endpoints.js';
 export type { FiltrosConsultaDto, RegistroDto } from './modules/consultas/dtos/consulta.dto.js';
 

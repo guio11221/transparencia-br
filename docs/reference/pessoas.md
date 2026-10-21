@@ -54,6 +54,21 @@ else console.warn(p.erro.status, p.erro.mensagem);
 - Cada seção traz a **primeira página**.
 - **Validação síncrona** do identificador.
 
+### Iterando as seções com tipos
+
+`secoesResumo()` transforma o resumo em pares `{ chave, secao }` com chave tipada,
+pulando as seções ausentes (ex.: sem CPF não há `cartoes`):
+
+```ts
+import { secoesResumo } from 'sdk-transparencia-br';
+
+for (const { chave, secao } of secoesResumo(resumo)) {
+  if (secao.status === 'sucesso') console.log(chave, secao.dados);
+}
+```
+
+Os tipos `ChaveResumo` e `EntradaResumo` também são exportados.
+
 ### Varrendo todas as páginas de uma seção
 
 `resumo` traz só a primeira página. Para mais, use o recurso correspondente:

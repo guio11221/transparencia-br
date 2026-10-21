@@ -22,17 +22,21 @@ const dominios = api.endpoints.dominios();
 
 // Executar qualquer endpoint do catálogo
 const dados = await api.endpoints.consultar('ceis', { nomeSancionado: 'ACME' });
+
+// Ou passar direto a entrada do catálogo (EndpointInfo) — a chave vem dela
+const [cartao] = api.endpoints.buscar('cartao');
+if (cartao) await api.endpoints.consultar(cartao, { cpfPortador: '12345678901' });
 ```
 
 ## Métodos
 
-| Método                         | Retorno                     | Descrição                                                       |
-| ------------------------------ | --------------------------- | --------------------------------------------------------------- |
-| `buscar(termo?, dominio?)`     | `EndpointInfo[]`            | Pesquisa textual tolerante a acentos; termos múltiplos são AND. |
-| `listar(dominio?)`             | `EndpointInfo[]`            | Catálogo completo, opcionalmente restrito a um domínio.         |
-| `descrever(recurso)`           | `EndpointInfo \| undefined` | Metadados de um endpoint específico.                            |
-| `dominios()`                   | `DominioEndpoint[]`         | Domínios disponíveis, em ordem alfabética.                      |
-| `consultar(recurso, filtros?)` | `Promise<RegistroDto[]>`    | Executa o endpoint, com validação e paginação.                  |
+| Método                         | Retorno                     | Descrição                                                                      |
+| ------------------------------ | --------------------------- | ------------------------------------------------------------------------------ |
+| `buscar(termo?, dominio?)`     | `EndpointInfo[]`            | Pesquisa textual tolerante a acentos; termos múltiplos são AND.                |
+| `listar(dominio?)`             | `EndpointInfo[]`            | Catálogo completo, opcionalmente restrito a um domínio.                        |
+| `descrever(recurso)`           | `EndpointInfo \| undefined` | Metadados de um endpoint específico.                                           |
+| `dominios()`                   | `DominioEndpoint[]`         | Domínios disponíveis, em ordem alfabética.                                     |
+| `consultar(recurso, filtros?)` | `Promise<RegistroDto[]>`    | Executa o endpoint, com validação e paginação. Aceita chave ou `EndpointInfo`. |
 
 ## Metadados de um endpoint
 

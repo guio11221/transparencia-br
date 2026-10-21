@@ -11,17 +11,27 @@ Os títulos de commit seguem [Conventional Commits](https://www.conventionalcomm
 ### Added
 
 - Catálogo pesquisável de endpoints: `api.endpoints.buscar/listar/descrever/dominios/consultar`,
-  com busca tolerante a acentos.
+  com busca tolerante a acentos. `consultar` também aceita uma entrada do catálogo
+  (`EndpointInfo`) diretamente.
 - Cobertura de **todos os 109 endpoints** oficiais (`endpoints.ts` + schemas zod por recurso).
 - `beneficios.beneficiariosPorMunicipio()` e variantes de benefícios
   (`-por-municipio`, `-beneficiario-por-municipio`, `-por-cpf-ou-nis`).
 - Recursos `situacao-imovel`, `orgaos-siafi`, `orgaos-siape` e `coronavirus/*`.
+- `secoesResumo()` e os tipos `ChaveResumo`/`EntradaResumo` para iterar o resumo de pessoa
+  com chaves tipadas.
 - Documentação de descoberta (`docs/reference/descoberta.md`).
 
 ### Changed
 
 - `porId` usa um mapa exaustivo recurso → endpoint (sem fallback silencioso).
-- CI roda em matriz Node 22/24 com `npm ci`, `format:check` e `pack:check`.
+- CI roda em matriz Node 22/24 com `npm ci`, `format:check`, `test:coverage` e `pack:check`.
+
+### Tests
+
+- Testes de integração do transporte HTTP com `fetch` falso (rate limit, cache, retries,
+  deduplicação e wiring do cliente).
+- Teste de contrato contra o OpenAPI oficial (pula automaticamente quando offline).
+- Cobertura mínima de 80% aplicada no CI.
 
 ## [1.0.4]
 

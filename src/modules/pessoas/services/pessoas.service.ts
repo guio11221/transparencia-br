@@ -39,6 +39,33 @@ export interface ResumoPessoa {
   ceaf?: SecaoResumo<RegistroDto[]>;
 }
 
+/** Chave de uma seção do {@link ResumoPessoa}, com autocompletar. */
+export type ChaveResumo = keyof ResumoPessoa;
+
+/** Seção do resumo acompanhada da sua chave, pronta para iteração tipada. */
+export type EntradaResumo<K extends ChaveResumo = ChaveResumo> = {
+  chave: K;
+  secao: NonNullable<ResumoPessoa[K]>;
+};
+
+/**
+ * Converte o {@link ResumoPessoa} em pares `{ chave, secao }` tipados, pulando seções
+ * ausentes. Útil para renderizar/inspecionar o resumo de forma genérica com autocompletar
+ * na `chave` e no tipo dos `dados`.
+ *
+ * @param resumo Resultado de {@link PessoasService.resumo}.
+ * @returns Lista de seções presentes, com a chave correspondente.
+ * @example
+ * for (const { chave, secao } of secoesResumo(resumo)) {
+ *   if (secao.status === 'sucesso') console.log(chave, secao.dados);
+ * }
+ */
+export function secoesResumo(resumo: ResumoPessoa): EntradaResumo[] {
+  return (Object.keys(resumo) as ChaveResumo[])
+    .map((chave) => ({ chave, secao: resumo[chave] }))
+    .filter((entrada): entrada is EntradaResumo => entrada.secao !== undefined);
+}
+
 interface TarefaResumo {
   chave: keyof ResumoPessoa;
   executar: () => Promise<unknown>;

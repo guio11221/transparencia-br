@@ -108,6 +108,18 @@ describe('Catálogo de endpoints', () => {
     expect(() => api.endpoints.consultar('peps', { pagina: 0 })).toThrow(/pagina/);
   });
 
+  it('aceita uma entrada do catálogo (EndpointInfo) diretamente', async () => {
+    const { get, api } = criarApi();
+    const [cartao] = api.endpoints.buscar('cartao');
+    expect(cartao).toBeDefined();
+    await api.endpoints.consultar(cartao!, { cpfPortador: '12345678901' });
+    expect(get).toHaveBeenCalledWith(
+      '/api-de-dados/cartoes',
+      { cpfPortador: '12345678901', pagina: 1 },
+      undefined,
+    );
+  });
+
   it('nunca injeta pagina em endpoints de registro único', async () => {
     const unicos = catalogoEndpoints.filter((e) => e.registroUnico);
     expect(unicos.length).toBeGreaterThan(0);
