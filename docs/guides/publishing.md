@@ -23,10 +23,28 @@ Checklist para lançar uma versão no npm.
 
 ## Publicando
 
+### Automático (recomendado)
+
+O repositório tem o workflow `.github/workflows/release.yml`: ao empurrar uma tag `vX.Y.Z`,
+o CI roda `npm run check` e publica no npm **com provenance** (assinatura verificável via OIDC).
+
+```bash
+npm version patch        # ou minor/major — cria o commit e a tag
+git push origin main --follow-tags
+```
+
+Pré-requisito (uma vez): crie um **Automation token** no npm e salve como secret `NPM_TOKEN`
+no GitHub (Settings → Secrets and variables → Actions).
+
+### Manual (local)
+
 ```bash
 npm login
 npm publish --access public
 ```
+
+> O npm exige 2FA (OTP) para contas com autenticação de dois fatores; o publish pelo CI evita
+> o prompt interativo.
 
 ## Nunca publique
 
@@ -35,7 +53,7 @@ npm publish --access public
 
 ## Pós-release
 
-- Crie a tag: `git tag vX.Y.Z && git push --tags`.
+- Crie a tag: `git tag vX.Y.Z && git push --tags` (o workflow de release cuida do publish).
 - Atualize o changelog e as notas de release no GitHub.
 
 Veja também: [Testes](testing.md) · [Configuração](configuration.md)
