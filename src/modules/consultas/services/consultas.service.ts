@@ -9,23 +9,13 @@ import {
 export { endpoints };
 export type RecursoConsulta = EndpointConsulta;
 export type Registro = RegistroDto;
-/** Endpoints oficiais que expõem o identificador como query string `/id?id=N`. */
-const endpointPorIdComQuery: Partial<Record<RecursoPorId, EndpointConsulta>> = {
-  contratos: 'contratosPorId',
-  convenios: 'conveniosPorId',
-};
-/** Endpoints oficiais cujo identificador é um segmento de caminho `/X/{id}`. */
-const endpointPorIdNoCaminho: Partial<Record<RecursoPorId, EndpointConsulta>> = {
-  servidores: 'servidoresPorId',
-  viagens: 'viagensPorId',
-  licitacoes: 'licitacoesPorId',
-  ceis: 'ceisPorId',
-  cnep: 'cnepPorId',
-  ceaf: 'ceafPorId',
-  cepim: 'cepimPorId',
-  acordosLeniencia: 'acordosLenienciaPorId',
-};
-/** Recursos que oferecem busca por identificador. */
+/**
+ * Recursos que oferecem busca por identificador.
+ *
+ * Esta união é a fonte de verdade: {@link endpointPorId} é tipado como
+ * `Record<RecursoPorId, EndpointConsulta>`, então adicionar um recurso aqui sem
+ * mapear o endpoint correspondente quebra a compilação — não há fallback silencioso.
+ */
 export type RecursoPorId =
   | 'servidores'
   | 'viagens'
@@ -37,6 +27,25 @@ export type RecursoPorId =
   | 'ceaf'
   | 'cepim'
   | 'acordosLeniencia';
+/**
+ * Mapeamento exaustivo recurso → endpoint oficial usado na busca por identificador.
+ *
+ * Os endpoints de `contratos`/`convenios` têm caminho `.../id` com `id` como parâmetro de
+ * query; os demais usam o placeholder `{id}` do próprio caminho. Em ambos os casos o
+ * `id` é resolvido por {@link ConsultasService.preparar}.
+ */
+const endpointPorId: Record<RecursoPorId, EndpointConsulta> = {
+  servidores: 'servidoresPorId',
+  viagens: 'viagensPorId',
+  contratos: 'contratosPorId',
+  convenios: 'conveniosPorId',
+  licitacoes: 'licitacoesPorId',
+  ceis: 'ceisPorId',
+  cnep: 'cnepPorId',
+  ceaf: 'ceafPorId',
+  cepim: 'cepimPorId',
+  acordosLeniencia: 'acordosLenienciaPorId',
+};
 /** Placeholders `{chave}` presentes em alguns caminhos de `endpoints`. */
 const placeholderCaminho = /\{(\w+)\}/g;
 
@@ -108,19 +117,7 @@ export class ConsultasService {
    */
   porId(recurso: RecursoPorId, id: string | number, signal?: AbortSignal) {
     if (!String(id).trim()) throw new Error('ID obrigatório');
-    const endpointId = endpointPorIdComQuery[recurso];
-    if (endpointId) {
-      return this.consultarUm(endpointId, { id }, signal);
-    }
-    const endpointCaminho = endpointPorIdNoCaminho[recurso];
-    if (endpointCaminho) {
-      return this.consultarUm(endpointCaminho, { id }, signal);
-    }
-    return this.http.get<RegistroDto>(
-      `${endpoints[recurso]}/${encodeURIComponent(String(id))}`,
-      {},
-      signal,
-    );
+    return this.consultarUm(endpointPorId[recurso], { id }, signal);
   }
 
   /**

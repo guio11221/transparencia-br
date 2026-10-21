@@ -38,16 +38,20 @@
   "files": [
     "dist",
     "README.md",
+    "CHANGELOG.md",
     "docs"
   ],
   "scripts": {
     "build": "tsup",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "check": "npm run typecheck && npm run lint && npm run test && npm run build"
+    "format:check": "prettier --check .",
+    "pack:check": "npm pack --dry-run",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm run test && npm run build"
   },
   "engines": {
     "node": ">=22"

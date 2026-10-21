@@ -107,6 +107,22 @@ describe('Catálogo de endpoints', () => {
     expect(get).toHaveBeenCalledWith('/api-de-dados/peps', { nome: 'Silva', pagina: 1 }, undefined);
     expect(() => api.endpoints.consultar('peps', { pagina: 0 })).toThrow(/pagina/);
   });
+
+  it('nunca injeta pagina em endpoints de registro único', async () => {
+    const unicos = catalogoEndpoints.filter((e) => e.registroUnico);
+    expect(unicos.length).toBeGreaterThan(0);
+    expect(unicos.some((e) => e.recurso === 'pessoaFisica')).toBe(true);
+    for (const info of unicos) expect(info.paginado).toBe(false);
+
+    const get = vi.fn().mockResolvedValue({});
+    const consultas = new ConsultasService({ get });
+    await consultas.consultarUm('pessoaFisica', { cpf: '12345678901' });
+    expect(get).toHaveBeenCalledWith(
+      '/api-de-dados/pessoa-fisica',
+      { cpf: '12345678901' },
+      undefined,
+    );
+  });
 });
 
 describe('Novas rotas por id', () => {
